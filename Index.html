@@ -192,6 +192,13 @@
 		    	alert("Multiplication table ends at ten(10) for standards, message for the brainiacs!");
 		    	clearTable();
 		    	inputField.value = "";
+				// Show default value
+				var defaultValue = createElem("div");
+				defaultValue.setAttribute("id", "defaultValue");
+				defaultValue.innerHTML = "1 x 1";
+				rowElem.appendChild(defaultValue);
+				var defaultValue = document.getElementById("defaultValue");
+				defaultValue.style.visibility = "visible";
 		    }
 		    // If input is not empty
 		    else {
