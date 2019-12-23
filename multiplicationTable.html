@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Multiplication Table of Numbers</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale = 1">
+	<style type="text/css">
+		html,
+		body {
+			min-height: 100vh;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			margin: 0;
+			padding: 0;
+			background: #F2994A;  /* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #F2C94C, #F2994A);  /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #F2C94C, #F2994A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		}
+		form {
+			width: 100%;
+			padding: 0 5em;
+		}
+		#inputField {
+			border: 1px solid #ccc;
+			border-radius: 1px;
+			outline: none;
+			height: 40px;
+			width: 100%!important;
+			padding: 1em;
+			box-sizing: border-box;
+			font-size: 1.5em;
+			color: #999;	
+		}
+		.container {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			flex-direction: column;
+			background: #fff;
+			padding: 0;
+			height: 500px;
+			width: 400px;
+			border-radius: 5px;
+			box-shadow: 0 30px 20px 0 rgba(0,0,0,0.30);
+			overflow: hidden;
+		}
+		#table {
+			background: #f7f7f7;
+			height: 100%;
+			width: 100%;
+			overflow: hidden;
+		}
+		#row {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+			padding: 0!important;
+			height: auto;
+		}
+		#defaultValue {
+			font-size: 5em;
+			color: rgba(255,255,255,0.5);
+		}
+		#title {
+			text-transform: uppercase;
+			font-weight: 900;
+			font-family: Arial, sans-serif;
+			margin: 0;
+			font-size: 1em;
+			padding: 1em;
+			margin-bottom: 10px;
+			text-align: center;
+			visibility: hidden;
+			background: #f7f7f7;
+		}
+		div.cell {
+			padding: 0.5em;
+		    background: #f2be4b;
+		    color: #fff;
+		    font-size: 1em;
+		    font-family: "Open Sans", sans-serif;
+		    font-weight: 700;
+		    margin: 10px;
+		    width: 30%;
+		    text-align: center;
+		    display: flex;
+			justify-content: center;
+			align-items: center;
+			box-shadow: 0 4px 5px 0 rgba(0,0,0,0.30);
+		}
+
+		/*Responsivness*/
+		@media (max-width: 768px) {
+			html
+			body {
+				overflow: hidden!important;
+			}
+			.container,
+			#table{
+				min-height: 100vh!important;
+				width: 100%;
+			}
+			#table {
+				overflow: scroll;
+				background: #22c1c3!important;  /* fallback for old browsers */
+				background: -webkit-linear-gradient(to right, #fdbb2d, #22c1c3)!important;  /* Chrome 10-25, Safari 5.1-6 */
+				background: linear-gradient(to right, #fdbb2d, #22c1c3)!important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+			}
+			#row {
+				background: #22c1c3!important;  /* fallback for old browsers */
+				background: -webkit-linear-gradient(to right, #fdbb2d, #22c1c3)!important;  /* Chrome 10-25, Safari 5.1-6 */
+				background: linear-gradient(to right, #fdbb2d, #22c1c3)!important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+				align-items: flex-start;
+				height: 70%;
+			}
+			#title {
+				font-size: 1rem;
+			}
+			.cell {
+				padding: 1em;
+				height: 20px;
+				width: 50%!important;
+				max-width: 100px!important;
+				background: #5e4409c2!important;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<form>
+			<input type="text" name="" id="inputField" autofocus="true" autocomplete="off">
+		</form>
+
+		<div id="table">
+			<p id="title">Multiplication Table Of <span id="number"></span> :<br></p>
+			<div id="row"><div id="defaultValue">1 X 1</div></div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		// WORD COUNT IMPLEMENTATION IN JAVASCRIPT
+		// var input = document.createElement('input');
+		// input.type = "text";
+		// input.setAttribute('id', 'wordField');
+		// document.body.prepend(input);
+		// input.addEventListener('keypress', ()=>{
+		//     countWords(input.value);
+		// });
+
+		// function countWords(str) {
+		//     var strArr = str.split(" ");
+		//     var strLen = strArr.length;
+		//     console.log(strLen + " Words");
+		// }
+
+		// MULTIPLICATTION TABLE IMPLEMENTATION IN JAVASCRIPT
+		// Get inputfield ELement
+		var inputField 	= document.getElementById("inputField");
+
+		inputField.addEventListener("keyup", ()=>{
+			multiplicationTable(inputField.value);
+		});
+
+		function multiplicationTable(num) {
+			var table = document.getElementById("table");
+			var rowElem = document.getElementById("row");
+		    var count = 1;
+
+		    // If input is empty
+		    if(num === '') {
+		    	clearTable();
+
+		    	// Show default value
+				var defaultValue = createElem("div");
+				defaultValue.setAttribute("id", "defaultValue");
+				defaultValue.innerHTML = "1 x 1";
+				rowElem.appendChild(defaultValue);
+				var defaultValue = document.getElementById("defaultValue");
+				defaultValue.style.visibility = "visible";
+
+
+				// Clear the browser console
+		    	console.clear();
+		    }
+		    else if (num > 10) {
+		    	alert("Multiplication table ends at ten(10) for standards, message for the brainiacs!");
+		    	clearTable();
+		    	inputField.value = "";
+		    }
+		    // If input is not empty
+		    else {
+		    	// Clear table before updating the DOM
+				clearTable();
+
+				// Display title message
+				var title = document.getElementById('title');
+				title.style.visibility = "visible";
+
+				// Update the number in the title message
+		    	var number = document.getElementById("number");
+		    	number.innerHTML = num;
+
+		    	// Log the title to the console
+		    	console.log("\nMultiplication Table Of " + num + ":\n");
+
+		    	// Loop till ten
+		    	while(count <= 10){
+		    		// Create a cell element and attach the value to it
+			    	var rowSpan = createElem("div");
+			    	// Give each cell a class
+			    	rowSpan.setAttribute('class', 'cell');
+			    	rowSpan.innerHTML = String(num) + " * " + String(count) + " = " + num * count;
+
+			    	// Log the table to the console
+			    	console.log(String(num) + " * " + String(count), " = ", num * count );
+
+			    	// Add tables to the row element
+			    	rowElem.appendChild(rowSpan);
+
+			    	// Increase the counter
+			        count++;
+			    }
+		    }
+		}
+
+		function clearTable() {
+			// Hide title message
+			var title = document.getElementById('title');
+			title.style.visibility = "hidden";
+
+			// Clear the Row element in the table
+			var rowElem = document.getElementById('row');
+			return rowElem.innerHTML = "";
+			
+			var defaultValue = createElem("div");
+			defaultValue.setAttribute("id", "defaultValue");
+			defaultValue.innerHTML = "1 x 1";
+			rowElem.appendChild(defaultValue);
+		}
+
+		// Create ELement
+		function createElem(elem){
+			// Create and return an element
+			return document.createElement(elem);
+		}
+
+	</script>
+</body>
+</html>
